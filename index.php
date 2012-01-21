@@ -1,5 +1,5 @@
 <?php
-include ('config.php');
+#include ('config.php');
 $Name = $_GET['name'];
 $Pass = $_GET['pass'];
 $sql = sprintf("SELECT * FROM accounts WHERE Name='%s'",
@@ -24,6 +24,3 @@ echo ( ($Pass == $PassCheck) ? "1" : "2");
 mysql_close();
 exit;
 ?>
-$query = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'",
-            mysql_real_escape_string($user),
-            mysql_real_escape_string($password));
