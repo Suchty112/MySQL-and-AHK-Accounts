@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(32) NOT NULL,
   `Passwd` varchar(64) NOT NULL,
+  `Accountlevel` INT( 11 ) NOT NULL DEFAULT '1' COMMENT 'für die Zukunft',
   PRIMARY KEY (`id`),
   KEY `id` (`id`,`Name`,`Passwd`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
