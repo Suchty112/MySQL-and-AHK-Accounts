@@ -1,2 +1,4 @@
 *.bak
+config.php
+settings*
 

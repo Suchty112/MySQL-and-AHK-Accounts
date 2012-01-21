@@ -2,7 +2,8 @@
 include ('config.php');
 $Name = $_GET['name'];
 $Pass = $_GET['pass'];
-$sql = "SELECT * FROM accounts WHERE Name = '$Name'";
+$sql = sprintf("SELECT * FROM accounts WHERE Name='%s'",
+            mysql_real_escape_string($Name),
 $result = mysql_query($sql);
 if (!$result) {
     echo "Konnte Abfrage ($sql) nicht erfolgreich ausführen von DB: " . mysql_error();
@@ -23,3 +24,6 @@ echo ( ($Pass == $PassCheck) ? "1" : "2");
 mysql_close();
 exit;
 ?>
+$query = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'",
+            mysql_real_escape_string($user),
+            mysql_real_escape_string($password));
