@@ -1,9 +1,9 @@
 <?php
-#include ('config.php');
+include ('config.php');
 $Name = $_GET['name'];
 $Pass = $_GET['pass'];
 $sql = sprintf("SELECT * FROM accounts WHERE Name='%s'",
-            mysql_real_escape_string($Name),
+            mysql_real_escape_string($Name));
 $result = mysql_query($sql);
 if (!$result) {
     echo "Konnte Abfrage ($sql) nicht erfolgreich ausführen von DB: " . mysql_error();

@@ -18,7 +18,7 @@ ExitApp
 
 LoginCheck:
 Gui, Login:Submit, NoHide
-CheckURL = http://mycoding.de/index.php?name=%LoginName%&pass=%Password%
+CheckURL = http://rev0.re.ohost.de/index.php?name=%LoginName%&pass=%Password%
 Checksumme:=UrlDownloadToVar(CheckURL)
 if (Checksumme ="1") {
 	MsgBox, 64, Information, Ihre Accountdaten wurden gefunden und waren richtig
