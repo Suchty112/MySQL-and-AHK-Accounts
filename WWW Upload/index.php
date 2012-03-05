@@ -27,10 +27,14 @@ if (mysql_num_rows($result) == 0) {
 
 while ($row = mysql_fetch_assoc($result)) {
     $PassCheck = $row["Passwd"];
+    $Gesperrt = $row["gespeert"];
     $AccLevel = $row["Acccountlevel"];
 }
 mysql_free_result($result);
-echo ( ($Pass == $PassCheck) ? "1" : "2");
+if ($gesperrt == "0") {
+	echo ( ($Pass == $PassCheck) ? "1" : "2");
+} else {
+	echo "6";
+}
 mysql_close();
-exit;
-?>
+exit;?>
