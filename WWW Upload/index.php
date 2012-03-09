@@ -12,11 +12,6 @@ if (!$result) {
 	$LastLogin = sprintf("UPDATE accounts SET LetzterLogin='%s' WHERE Name='%s'",
             mysql_real_escape_string($Now),
             mysql_real_escape_string($_GET['name']));
-	$SetLastLogin = mysql_query($LastLogin);
-	if (!$SetLastLogin) {
-		echo "<strong>FEHLER:</strong> Konnte Abfrage ($LastLogin) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
-		exit(ABBRUCH);
-	}
 }
 
 
@@ -27,14 +22,23 @@ if (mysql_num_rows($result) == 0) {
 
 while ($row = mysql_fetch_assoc($result)) {
     $PassCheck = $row["Passwd"];
-    $Gesperrt = $row["gespeert"];
+    $Gesperrt = $row["gesperrt"];
     $AccLevel = $row["Acccountlevel"];
 }
 mysql_free_result($result);
-if ($gesperrt == "0") {
-	echo ( ($Pass == $PassCheck) ? "1" : "2");
+if ($Pass == $PassCheck) {
+	if ($Gesperrt == "0") {
+		echo "1";
+		$SetLastLogin = mysql_query($LastLogin);
+		if (!$SetLastLogin) {
+			echo "<strong>FEHLER:</strong> Konnte Abfrage ($LastLogin) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+			exit(ABBRUCH);
+		}
+	} else {
+		echo "6";
+	}
 } else {
-	echo "6";
+	echo "2";
 }
 mysql_close();
 exit;?>

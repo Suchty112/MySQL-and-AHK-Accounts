@@ -16,6 +16,6 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 -- Daten für Tabelle `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `Name`, `Passwd`, `Accountlevel`, `ErstelltAm`, `ErstelltVon`, `LetzterLogin`) VALUES
+INSERT INTO `accounts` (`id`, `Name`, `Passwd`, `Accountlevel`, `ErstelltAm`, `ErstelltVon`, `LetzterLogin`, `gesperrt`) VALUES
 (1, 'admin', 'admin', 1337, '', 'Dux Aquila', '', '0'),
 (2, 'Test', 'test', 1, '', 'Dux Aquila', '', '0');
