@@ -3,6 +3,9 @@
 Die Accountöschung wie folgt:
 admin.php?name=<Adminname>&pass=<Adminpasswort>&deluser=<Accountt der gelöscht werden soll>
 
+Die Account sperrung wie folgt:
+admin.php?name=<Adminname>&pass=<Adminpasswort>&closeuser<Accountt der gelöscht werden soll>
+
 Die Accounterstellung wie folgt:
 admin2.php?name=name=<Adminname>&pass=<Adminpasswort>&useradd=<Neuer Nutzer>&passwd=<Passwort>&level=<Admin Level>
 */
@@ -14,8 +17,14 @@ $Fehlermeldung3 = sprintf("<strong>FEHLER:</strong> Zu löschender Account wurde 
 $Fehlermeldung4 = sprintf("<strong>FEHLER:</strong> Sie können nicht den einzigsten Admin Account Löschen!");
 $Loescherfolg = sprintf("Wurde erfolgreich gelöscht");
 
+$UpdateUserFehler1 = sprintf("<strong>FEHLER:</strong> Nutzer nicht gefunden");
+$UpdateUserFehler2 = sprintf("<strong>FEHLER:</strong> Nutzer nicht bearbeitet");
+$UpdateUserDone = sprintf("Wurde erfolgreich geändert");
+
 $UserAddFehler1 = sprintf("<strong>FEHLER:</strong> Ein Account mit dem Namen ist schon vorhanden!");
 $UserAddFehler2 = sprintf("<strong>FEHLER:</strong> Sie haben kein Passwort angegeben!");
+
+$UserSelf = sprintf("<strong>FEHLER:</strong> Sie können sich nicht selbst sperren!");
 $sql = sprintf("SELECT * FROM accounts WHERE Name='%s' AND Passwd='%s'",
             mysql_real_escape_string($_GET['name']),
             mysql_real_escape_string($_GET['pass']));
@@ -47,7 +56,47 @@ mysql_free_result($result);
 if ($AccLevel == "1337") {
 	if (!$_GET['useradd']) {
 		if (!$_GET['deluser']) {
-		exit($Fehlermeldung2);
+			if (!$_GET['closeuser']) {
+			exit($Fehlermeldung2);
+			} else {
+				if ($_GET['closeuser'] == $_GET['name']) {
+					exit($UserSelf);
+				} else {
+					$updateusercheck = sprintf("SELECT * FROM accounts WHERE Name='%s'",
+						mysql_real_escape_string($_GET['closeuser']));
+					$ausgabe = mysql_query($updateusercheck);
+					if (!$ausgabe) {
+						echo "<strong>FEHLER:</strong> Konnte Abfrage ($dupdateusercheck) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+						exit(ABBRUCH1);
+					}
+				
+					if (mysql_num_rows($ausgabe) == 0) {
+					exit($UpdateUserFehler1);
+					}
+					mysql_free_result($ausgabe);
+					$UpdateString = sprintf("UPDATE accounts SET gesperrt='1' WHERE Name='%s'",
+						mysql_real_escape_string($_GET['closeuser']));
+					$Update = mysql_query($UpdateString);
+					if (!$Update) {
+						echo "<strong>FEHLER:</strong> Konnte Abfrage ($Update) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+						exit(ABBRUCH2);
+					} else {
+						$updateTrue = sprintf("SELECT * FROM accounts WHERE Name='%s' AND gesperrt='1'",
+							mysql_real_escape_string($_GET['closeuser']));
+						$Updatefine = mysql_query($updateTrue);
+						if (!$Updatefine) {
+							echo "<strong>FEHLER:</strong> Konnte Abfrage ($Updatefine) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+							exit(ABBRUCH3);
+						}
+					
+						if (mysql_num_rows($Updatefine) == 0) {
+							exit($UpdateUserFehler2);
+						} else {
+							exit($UpdateUserDone);
+						}
+					}	
+				}
+			}
 		} else {
 			$delusercheck = sprintf("SELECT * FROM accounts WHERE Name='%s'",
 				mysql_real_escape_string($_GET['deluser']));
