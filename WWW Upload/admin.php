@@ -25,6 +25,7 @@ $UserAddFehler1 = sprintf("<strong>FEHLER:</strong> Ein Account mit dem Namen is
 $UserAddFehler2 = sprintf("<strong>FEHLER:</strong> Sie haben kein Passwort angegeben!");
 
 $UserSelf = sprintf("<strong>FEHLER:</strong> Sie können sich nicht selbst sperren!");
+
 $sql = sprintf("SELECT * FROM accounts WHERE Name='%s' AND Passwd='%s'",
             mysql_real_escape_string($_GET['name']),
             mysql_real_escape_string($_GET['pass']));
@@ -42,7 +43,6 @@ if (!$result) {
 		exit(ABBRUCH);
 	}
 }
-		
 
 if (mysql_num_rows($result) == 0) {
 	exit($Fehlermeldung1);
@@ -62,11 +62,11 @@ if ($AccLevel == "1337") {
 				if ($_GET['closeuser'] == $_GET['name']) {
 					exit($UserSelf);
 				} else {
-					$updateusercheck = sprintf("SELECT * FROM accounts WHERE Name='%s'",
+					$UpdateUserCheck = sprintf("SELECT * FROM accounts WHERE Name='%s'",
 						mysql_real_escape_string($_GET['closeuser']));
-					$ausgabe = mysql_query($updateusercheck);
+					$ausgabe = mysql_query($UpdateUserCheck);
 					if (!$ausgabe) {
-						echo "<strong>FEHLER:</strong> Konnte Abfrage ($dupdateusercheck) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+						echo "<strong>FEHLER:</strong> Konnte Abfrage ($dUpdateUserCheck) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
 						exit(ABBRUCH1);
 					}
 				
@@ -81,15 +81,15 @@ if ($AccLevel == "1337") {
 						echo "<strong>FEHLER:</strong> Konnte Abfrage ($Update) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
 						exit(ABBRUCH2);
 					} else {
-						$updateTrue = sprintf("SELECT * FROM accounts WHERE Name='%s' AND gesperrt='1'",
+						$UpdateTrue = sprintf("SELECT * FROM accounts WHERE Name='%s' AND gesperrt='1'",
 							mysql_real_escape_string($_GET['closeuser']));
-						$Updatefine = mysql_query($updateTrue);
-						if (!$Updatefine) {
+						$UpdateFine = mysql_query($UpdateTrue);
+						if (!$UpdateFine) {
 							echo "<strong>FEHLER:</strong> Konnte Abfrage ($Updatefine) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
 							exit(ABBRUCH3);
 						}
 					
-						if (mysql_num_rows($Updatefine) == 0) {
+						if (mysql_num_rows($UpdateFine) == 0) {
 							exit($UpdateUserFehler2);
 						} else {
 							exit($UpdateUserDone);
@@ -140,6 +140,7 @@ if ($AccLevel == "1337") {
 				}
 			} else {
 				echo "Unbekannter Fehler";
+				Exit(ABBRUCH);
 			}
 			mysql_free_result($result);
 		}
@@ -170,7 +171,7 @@ if ($AccLevel == "1337") {
 					echo "<strong>FEHLER:</strong> Konnte Abfrage ($adduser) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
 					exit(ABBRUCH);
 				} else {
-					echo "Test";
+					Exit(Done);
 				}
 			}
 		}
