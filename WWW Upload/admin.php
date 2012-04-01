@@ -1,3 +1,8 @@
+<html>
+<head>
+ <title>Account Management</title>
+</head>
+</html>
 <?php
 /*
 Die Accountöschung wie folgt:
@@ -10,6 +15,14 @@ Die Accounterstellung wie folgt:
 admin2.php?name=name=<Adminname>&pass=<Adminpasswort>&useradd=<Neuer Nutzer>&passwd=<Passwort>&level=<Admin Level>
 */
 include ('config.php');
+
+$Name = $_GET['name'];
+$Pass = $_GET['pass'];
+if(!$Name and !$Pass) {
+	exit(ERROR);
+}
+
+//Textbinds
 $Now = date("Y-m-d H:i:s");
 $Fehlermeldung1 = sprintf("<strong>FEHLER:</strong> Benutzername oder Passwort falsch");
 $Fehlermeldung2 = sprintf("<strong>FEHLER:</strong> Sie haben nicht angegeben was sie machen wollen");
@@ -25,6 +38,7 @@ $UserAddFehler1 = sprintf("<strong>FEHLER:</strong> Ein Account mit dem Namen is
 $UserAddFehler2 = sprintf("<strong>FEHLER:</strong> Sie haben kein Passwort angegeben!");
 
 $UserSelf = sprintf("<strong>FEHLER:</strong> Sie können sich nicht selbst sperren!");
+//TextBinds Ende
 
 $sql = sprintf("SELECT * FROM accounts WHERE Name='%s' AND Passwd='%s'",
             mysql_real_escape_string($_GET['name']),

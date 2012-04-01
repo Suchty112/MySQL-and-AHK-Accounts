@@ -1,7 +1,16 @@
+<html>
+<head>
+ <title>Authentification</title>
+</head>
+</html>
 <?php
 include ('config.php');
 $Name = $_GET['name'];
 $Pass = $_GET['pass'];
+if(!$Name and !$Pass) {
+	exit(ERROR);
+}
+
 $sql = sprintf("SELECT * FROM accounts WHERE Name='%s'",
             mysql_real_escape_string($Name));
 $result = mysql_query($sql);
@@ -41,4 +50,6 @@ if ($Pass == $PassCheck) {
 	echo "2";
 }
 mysql_close();
-exit;?>
+exit;
+?>
+
