@@ -1,8 +1,3 @@
-<html>
-<head>
- <title>Account Management</title>
-</head>
-</html>
 <?php
 /*
 Die Accountöschung wie folgt:

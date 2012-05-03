@@ -12,3 +12,7 @@ Es ist nun möglich auch Accounts per php zu Sperren Das Entsperren sowie das Im
 V. 1.2.0.1
 Die Datei index.php wurde grob verändert und als accountcheck.php neu abgelegt
 Desweiteren wird man nun bei fehlender angabe eines namens auf eine Loginseite weitergeleitet login.php
+
+V. 1.2.0.2
+Der Fehler in der accountcheck.php wurde beseitigt. Es ist nun auch das richtige Level auslesbar
+

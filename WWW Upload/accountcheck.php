@@ -31,7 +31,7 @@ if(!$_GET['name']){
 	while ($row = mysql_fetch_array($result, MYSQL_BOTH)) {
 	    $PassCheck = $row["Passwd"];
 	    $Gesperrt = $row["gesperrt"];
-	    $AccLevel = $row["Acccountlevel"];
+	    $AccLevel = $row["Accountlevel"];
 	}
 	mysql_free_result($result);
 	if ($Pass == $PassCheck) {
