@@ -5,6 +5,11 @@ $SQLPasswort = "DB Password";
 $SQLDB = "Database";
 $Now = date("Y-m-d H:i:s");
 
+//Admineinstellungen
+$User = "1"; //Setzen sie hier das Level für den User
+$Supporter = "2"; //Setzen sie hier das Level für den Supporter
+$Admin = "3"; //Setzen sie hier das Level für den Admin
+
 mysql_connect($SQLHost, $SQLUser, $SQLPasswort) or die ('Keine Verbindung moeglich:' . mysql_error());
 mysql_select_db($SQLDB) or die ('Die Datenbank existiert nicht:' . mysql_error());
 ?>

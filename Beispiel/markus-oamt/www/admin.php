@@ -67,7 +67,7 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 mysql_free_result($result);
 
-if ($AccLevel == "1337") {
+if ($AccLevel == $Admin) {
 	if (!$_GET['useradd']) {
 		if (!$_GET['deluser']) {
 			if (!$_GET['closeuser']) {
@@ -106,6 +106,16 @@ if ($AccLevel == "1337") {
 						if (mysql_num_rows($UpdateFine) == 0) {
 							exit($UpdateUserFehler2);
 						} else {
+							$Adminlog=fopen("adminlog.txt","a");
+							fputs($Adminlog, 
+		  						 Date("d.m.Y, H:i:s",time()) .
+								 ", " . $Name .
+								 ", Sperrte den User " . $_GET['useradd'] .
+								 ", Mit dem Accountlevel " . $_GET['level'] .
+								 ", an" . $_SERVER['HTTP_USER_AGENT'] .
+								 "\n "
+							);
+							fclose($Adminlog);
 							exit($UpdateUserDone);
 						}
 					}	
@@ -150,6 +160,16 @@ if ($AccLevel == "1337") {
 					echo $_GET['deluser'];
 					echo " ";
 					mysql_free_result($delResult);
+					$Adminlog=fopen("adminlog.txt","a");
+					fputs($Adminlog, 
+  						 Date("d.m.Y, H:i:s",time()) .
+						 ", " . $Name .
+						 ", Löschte den User " . $_GET['useradd'] .
+						 ", Mit dem Accountlevel " . $_GET['level'] .
+						 ", an" . $_SERVER['HTTP_USER_AGENT'] .
+						 "\n "
+					);
+					fclose($Adminlog);
 					exit($Loescherfolg);
 				}
 			} else {
@@ -185,6 +205,16 @@ if ($AccLevel == "1337") {
 					echo "<strong>FEHLER:</strong> Konnte Abfrage ($adduser) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
 					exit(ABBRUCH);
 				} else {
+						$Adminlog=fopen("adminlog.txt","a");
+						fputs($Adminlog, 
+	  						 Date("d.m.Y, H:i:s",time()) .
+							 ", " . $Name .
+							 ", Legte den User " . $_GET['useradd'] .
+							 ", Mit dem Accountlevel " . $_GET['level'] .
+							 ", an" . $_SERVER['HTTP_USER_AGENT'] .
+							 "\n "
+						);
+						fclose($Adminlog);
 					Exit(Done);
 				}
 			}
@@ -194,6 +224,107 @@ if ($AccLevel == "1337") {
 
 mysql_free_result($result);
 mysql_close();
+if ($AccLevel == $Supporter) {
+	if (!$_GET['useradd']) {
+		if (!$_GET['closeuser']) {
+			exit($Fehlermeldung2);
+			} else {
+				if ($_GET['closeuser'] == $_GET['name']) {
+					exit($UserSelf);
+				} else {
+					$UpdateUserCheck = sprintf("SELECT * FROM accounts WHERE Name='%s'",
+						mysql_real_escape_string($_GET['closeuser']));
+					$ausgabe = mysql_query($UpdateUserCheck);
+					if (!$ausgabe) {
+						echo "<strong>FEHLER:</strong> Konnte Abfrage ($dUpdateUserCheck) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+						exit(ABBRUCH1);
+					}
+			
+					if (mysql_num_rows($ausgabe) == 0) {
+						exit($UpdateUserFehler1);
+					}
+					mysql_free_result($ausgabe);
+					$UpdateString = sprintf("UPDATE accounts SET gesperrt='1' WHERE Name='%s'",
+						mysql_real_escape_string($_GET['closeuser']));
+					$Update = mysql_query($UpdateString);
+					if (!$Update) {
+						echo "<strong>FEHLER:</strong> Konnte Abfrage ($Update) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+						exit(ABBRUCH2);
+					} else {
+						$UpdateTrue = sprintf("SELECT * FROM accounts WHERE Name='%s' AND gesperrt='1'",
+							mysql_real_escape_string($_GET['closeuser']));
+						$UpdateFine = mysql_query($UpdateTrue);
+						if (!$UpdateFine) {
+							echo "<strong>FEHLER:</strong> Konnte Abfrage ($Updatefine) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+							exit(ABBRUCH3);
+						}
+				
+						if (mysql_num_rows($UpdateFine) == 0) {
+							exit($UpdateUserFehler2);
+						} else {
+							$Adminlog=fopen("adminlog.txt","a");
+							fputs($Adminlog, 
+		  						 Date("d.m.Y, H:i:s",time()) .
+								 ", " . $Name .
+								 ", Sperrte den User " . $_GET['useradd'] .
+								 ", Mit dem Accountlevel " . $_GET['level'] .
+								 ", an" . $_SERVER['HTTP_USER_AGENT'] .
+								 "\n "
+							);
+							fclose($Adminlog);
+							exit($UpdateUserDone);
+						}
+					}	
+				}
+			}
+		} else {
+			$Now = date("Y-m-d H:i");
+			$NameCheck = sprintf("SELECT * FROM accounts WHERE Name='%s'",
+				mysql_real_escape_string($_GET['useradd']));
+			$result = mysql_query($NameCheck);
+			if (!$result) {
+				echo "<strong>FEHLER:</strong> Konnte Abfrage ($NameCheck) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+				exit(ABBRUCH);
+			}
+		
+			if (mysql_num_rows($result) >= 1) {
+				exit($UserAddFehler1);
+			} else {
+				if (!$_GET['passwd']) {
+					exit($UserAddFehler2);
+				} else {
+					$adduser = "INSERT INTO accounts SET
+					Name   = '" . mysql_real_escape_string($_GET['useradd']) . "',
+					Passwd   = '" . mysql_real_escape_string($_GET['passwd']) . "',
+					Accountlevel   = '" . mysql_real_escape_string($_GET['level']) . "',
+					ErstelltAm   = '" . mysql_real_escape_string($Now) . "',
+					ErstelltVon   = '" . mysql_real_escape_string($_GET['name']) . "'";
+					$ausgabe = mysql_query($adduser);
+					if (!$ausgabe) {
+						echo "<strong>FEHLER:</strong> Konnte Abfrage ($adduser) <br>nicht erfolgreich ausfuehren von DB: <br>" . mysql_error();
+						exit(ABBRUCH);
+					} else {
+						$Adminlog=fopen("adminlog.txt","a");
+						fputs($Adminlog, 
+	  						 Date("d.m.Y, H:i:s",time()) .
+							 ", " . $Name .
+							 ", Legte den User " . $_GET['useradd'] .
+							 ", Mit dem Accountlevel " . $_GET['level'] .
+							 ", an" . $_SERVER['HTTP_USER_AGENT'] .
+							 "\n "
+						);
+						fclose($Adminlog);
+						Exit(Done);
+					}
+				}
+			}
+		}
+	}
+}
+mysql_free_result($result);
+mysql_close();
+if ($AccLevel == $User) {
+	echo "Fehler: Sie sind nicht berechtigt abfragen zu tätigen";
+}
 exit;
-
 ?>

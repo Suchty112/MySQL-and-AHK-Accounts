@@ -78,7 +78,6 @@ Gui, Login:Add, Edit, x6 y30 w250 h20 +BackgroundTrans vLoginName, Name
 Gui, Login:Add, Edit, x6 y50 w250 h20 +BackgroundTrans vPassword, Password
 Gui, Login:Add, Button, x6 y70 w90 h20 gLoginCheck, OK
 Gui, Login:Add, Button, x166 y70 w90 h20 gLoginAbbruch, Abbrechen
-;Gui, Login:+LabelLogin +LastFound +AlwaysOnTop -Caption
 Gui, Login:Color, EEAA99
 Gui, Login:Show, w267 h103, Login
 return
@@ -146,7 +145,6 @@ if(UpdateCheck = "1") {
 return
 
 Main:
-;Gui, Main:Add, Picture, x-4 y0 w480 h380 , C:\Dokumente und Einstellungen\Dux\Desktop\Grafiken\background.jpg
 if (Admin = "0") {
 	Gui, Main:Add, Tab2, x-4 y0 w480 h377 , Main|Einstellungen|Bug Report
 } else {
