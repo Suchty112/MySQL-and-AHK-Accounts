@@ -10,7 +10,7 @@ action 1 = Accounterstellung --> GEHT
 action 2 = Account sperren --> FEHLT 
 action 3 = Account entsperren --> FEHLT 
 action 4 = Account löschen --> FEHLT
-action 5 = Account übersicht --> Kommt vielleicht
+action 5 = Account Info --> Kommt vielleicht
 
 */
 include ('config.php');
@@ -116,6 +116,18 @@ if ($Option = 1) {
 	}
 }
 //Account erstellen ENDE
+
+//Account sperren ANFANG
+//Account sperren ENDE
+
+//Account entsperren ANFANG
+//Account entsperren ENDE
+
+//Account löschen ANFANG
+//Account löschen ENDE
+
+//Account Info ANFANG
+//Account info ENDE
 
 //funktionen
 function getpass() {
