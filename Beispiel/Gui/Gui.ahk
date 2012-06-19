@@ -1,75 +1,7 @@
 ﻿#SingleInstance, force
 #NoEnv
 Version := "1.0.0.0"
-MainUrl := "http://eon.cwsurf.de/Keybinder/markus-oamt"
-/*
-Info 
-
-/duty
-/oaopen
-/removeblitzer
-/refillspray
-/otazer
-/sz
-/sprunk
-/zollstatus
-/frisk
-/take
-/tow
-/towcar
-/towbike
-/towtrailer
-/setblitzer
-/listblitzer
-/ofill
-/carowner
-/givepoints
-/deletepoints
-/getpoints
-
-Leaderbefehle
-
-
-/respawngangcars
-/parkgangcars
-/sellgangcars
-/invite
-/uninvite
-/giverank
-/fkasse
-
-
-/m Allgemeine Verkehrskontrolle fahren Sie rechts ran!
-/m Rechts ran fahren und Motor aus!
-/m Halten Sie sofort an oder wir alamieren das LSPD!
-/m Bitte räumen Sie die Straße!
-/m Achten sie auf die STVO! (Licht an)
-
-Guten Tag Sir kann ich bitte Ihre Papiere sehen?
-Licensen und Perso zeigen sie mit /showlicenses (id) und /showperso (id).
-Darf ich nach Drogen und Waffen durchsuchen?
-Sie haben illegale Drogen/Waffen bei sich ich muss Ihnen die jetzt abnehmen und das LSPD infomieren.
-Ich muss Ihnen jetzt ein Ticket ausstellen,sollten Sie sich weigern muss ich das LSPD einschalten.
-
-/gov Es ist 19:00 Uhr Licht an nicht vergessen.
-/gov Das Ordnungsamt sucht noch Mitarbeiter infos im Forum.
-
-SA:MP Server-IP:46.38.239.14:7777
-
-SA:MP Server-Status: Online
-
-Teamspeak³ IP: 46.38.239.14:9987
-
-Teamspeak³ Server-Status: Online
-
-Controlpanel/Regelwerk Status: Online
-*/
-;SplashTextOn, , , Nur die Titelleiste anzeigen.
-;Sleep, 2000
-;SplashTextOn, 400, 300, Zwischenablage, Die Zwischenablage enthält:`n%clipboard%
-;WinMove, Zwischenablage, , 0, 0  ; Verschiebt das Splash-Fenster in die linke obere Ecke.
-;Msgbox, OK drücken, um das Splash-Fenster zu schließen
-;SplashTextOff
+MainUrl := "localhost"
 
 Gui, Login:+LabelLogin +LastFound +AlwaysOnTop -Caption
 WinSet, TransColor, EEAA99 255
